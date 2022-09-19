@@ -7,25 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D029826D28D47377001FDB3A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029826C28D47376001FDB3A /* HomeViewController.swift */; };
+		D029826F28D47DD8001FDB3A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029826E28D47DD8001FDB3A /* UIColorExtension.swift */; };
+		D029827528D4861B001FDB3A /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D029827228D4861B001FDB3A /* Montserrat-Medium.ttf */; };
+		D029827628D4861B001FDB3A /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D029827328D4861B001FDB3A /* Montserrat-SemiBold.ttf */; };
+		D029827728D4861B001FDB3A /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D029827428D4861B001FDB3A /* Montserrat-Regular.ttf */; };
+		D03640AB28D497F000BAFD41 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640AA28D497F000BAFD41 /* NetworkRequest.swift */; };
+		D03640B328D4A3B400BAFD41 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640AD28D4A3B400BAFD41 /* Time.swift */; };
+		D03640B428D4A3B400BAFD41 /* EUR.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640AE28D4A3B400BAFD41 /* EUR.swift */; };
+		D03640B528D4A3B400BAFD41 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640AF28D4A3B400BAFD41 /* Request.swift */; };
+		D03640B628D4A3B400BAFD41 /* GBP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640B028D4A3B400BAFD41 /* GBP.swift */; };
+		D03640B728D4A3B400BAFD41 /* Bpi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640B128D4A3B400BAFD41 /* Bpi.swift */; };
+		D03640B828D4A3B400BAFD41 /* USD.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640B228D4A3B400BAFD41 /* USD.swift */; };
+		D0A187FF28D6776200294D00 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A187FE28D6776200294D00 /* UIButtonExtension.swift */; };
+		D0A1880128D679FD00294D00 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1880028D679FD00294D00 /* UILabelExtension.swift */; };
+		D0A1880328D75F8300294D00 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1880228D75F8300294D00 /* DataService.swift */; };
 		D0B9B98628D374A800AB75E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9B98528D374A800AB75E6 /* AppDelegate.swift */; };
 		D0B9B98828D374A800AB75E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9B98728D374A800AB75E6 /* SceneDelegate.swift */; };
-		D0B9B98A28D374A800AB75E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9B98928D374A800AB75E6 /* ViewController.swift */; };
-		D0B9B98D28D374A800AB75E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0B9B98B28D374A800AB75E6 /* Main.storyboard */; };
 		D0B9B99028D374A800AB75E6 /* MyWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0B9B98E28D374A800AB75E6 /* MyWallet.xcdatamodeld */; };
 		D0B9B99228D374AA00AB75E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B9B99128D374AA00AB75E6 /* Assets.xcassets */; };
 		D0B9B99528D374AA00AB75E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0B9B99328D374AA00AB75E6 /* LaunchScreen.storyboard */; };
+		D0CE1A9328D4B66F00E48AB7 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CE1A9228D4B66F00E48AB7 /* ErrorMessages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D029826C28D47376001FDB3A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D029826E28D47DD8001FDB3A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		D029827228D4861B001FDB3A /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Medium.ttf"; path = "../../../Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		D029827328D4861B001FDB3A /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-SemiBold.ttf"; path = "../../../Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		D029827428D4861B001FDB3A /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Regular.ttf"; path = "../../../Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		D03640AA28D497F000BAFD41 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		D03640AD28D4A3B400BAFD41 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Time.swift; path = ../../../codegen_63246bfe05ee6/Time.swift; sourceTree = "<group>"; };
+		D03640AE28D4A3B400BAFD41 /* EUR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EUR.swift; path = ../../../codegen_63246bfe05ee6/EUR.swift; sourceTree = "<group>"; };
+		D03640AF28D4A3B400BAFD41 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = ../../../codegen_63246bfe05ee6/Request.swift; sourceTree = "<group>"; };
+		D03640B028D4A3B400BAFD41 /* GBP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GBP.swift; path = ../../../codegen_63246bfe05ee6/GBP.swift; sourceTree = "<group>"; };
+		D03640B128D4A3B400BAFD41 /* Bpi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bpi.swift; path = ../../../codegen_63246bfe05ee6/Bpi.swift; sourceTree = "<group>"; };
+		D03640B228D4A3B400BAFD41 /* USD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = USD.swift; path = ../../../codegen_63246bfe05ee6/USD.swift; sourceTree = "<group>"; };
+		D0A187FE28D6776200294D00 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		D0A1880028D679FD00294D00 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		D0A1880228D75F8300294D00 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		D0B9B98228D374A800AB75E6 /* MyWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0B9B98528D374A800AB75E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0B9B98728D374A800AB75E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D0B9B98928D374A800AB75E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D0B9B98C28D374A800AB75E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0B9B98F28D374A800AB75E6 /* MyWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyWallet.xcdatamodel; sourceTree = "<group>"; };
 		D0B9B99128D374AA00AB75E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0B9B99428D374AA00AB75E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0B9B99628D374AA00AB75E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0CE1A9228D4B66F00E48AB7 /* ErrorMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +67,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D029827028D485FB001FDB3A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D029827228D4861B001FDB3A /* Montserrat-Medium.ttf */,
+				D029827428D4861B001FDB3A /* Montserrat-Regular.ttf */,
+				D029827328D4861B001FDB3A /* Montserrat-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		D029827128D48601001FDB3A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D029826E28D47DD8001FDB3A /* UIColorExtension.swift */,
+				D0A187FE28D6776200294D00 /* UIButtonExtension.swift */,
+				D0A1880028D679FD00294D00 /* UILabelExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D029827828D49585001FDB3A /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				D0B9B98528D374A800AB75E6 /* AppDelegate.swift */,
+				D0B9B98728D374A800AB75E6 /* SceneDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		D029827A28D495B4001FDB3A /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D029826C28D47376001FDB3A /* HomeViewController.swift */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		D03640A928D497D500BAFD41 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				D03640AA28D497F000BAFD41 /* NetworkRequest.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		D03640AC28D4A39600BAFD41 /* CurrencyModel */ = {
+			isa = PBXGroup;
+			children = (
+				D03640B128D4A3B400BAFD41 /* Bpi.swift */,
+				D03640AE28D4A3B400BAFD41 /* EUR.swift */,
+				D03640B028D4A3B400BAFD41 /* GBP.swift */,
+				D03640AF28D4A3B400BAFD41 /* Request.swift */,
+				D03640AD28D4A3B400BAFD41 /* Time.swift */,
+				D03640B228D4A3B400BAFD41 /* USD.swift */,
+			);
+			path = CurrencyModel;
+			sourceTree = "<group>";
+		};
+		D0B36D5228D87EE400332CA3 /* DataService */ = {
+			isa = PBXGroup;
+			children = (
+				D0A1880228D75F8300294D00 /* DataService.swift */,
+			);
+			path = DataService;
+			sourceTree = "<group>";
+		};
 		D0B9B97928D374A800AB75E6 = {
 			isa = PBXGroup;
 			children = (
@@ -58,16 +152,28 @@
 		D0B9B98428D374A800AB75E6 /* MyWallet */ = {
 			isa = PBXGroup;
 			children = (
-				D0B9B98528D374A800AB75E6 /* AppDelegate.swift */,
-				D0B9B98728D374A800AB75E6 /* SceneDelegate.swift */,
-				D0B9B98928D374A800AB75E6 /* ViewController.swift */,
-				D0B9B98B28D374A800AB75E6 /* Main.storyboard */,
+				D0B36D5228D87EE400332CA3 /* DataService */,
+				D0CE1A9128D4B66000E48AB7 /* Errors */,
+				D03640AC28D4A39600BAFD41 /* CurrencyModel */,
+				D03640A928D497D500BAFD41 /* NetworkManager */,
+				D029827A28D495B4001FDB3A /* HomeViewController */,
+				D029827828D49585001FDB3A /* Delegate */,
+				D029827128D48601001FDB3A /* Extensions */,
+				D029827028D485FB001FDB3A /* Fonts */,
 				D0B9B99128D374AA00AB75E6 /* Assets.xcassets */,
 				D0B9B99328D374AA00AB75E6 /* LaunchScreen.storyboard */,
 				D0B9B99628D374AA00AB75E6 /* Info.plist */,
 				D0B9B98E28D374A800AB75E6 /* MyWallet.xcdatamodeld */,
 			);
 			path = MyWallet;
+			sourceTree = "<group>";
+		};
+		D0CE1A9128D4B66000E48AB7 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				D0CE1A9228D4B66F00E48AB7 /* ErrorMessages.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,8 +235,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0B9B99528D374AA00AB75E6 /* LaunchScreen.storyboard in Resources */,
+				D029827528D4861B001FDB3A /* Montserrat-Medium.ttf in Resources */,
+				D029827628D4861B001FDB3A /* Montserrat-SemiBold.ttf in Resources */,
+				D029827728D4861B001FDB3A /* Montserrat-Regular.ttf in Resources */,
 				D0B9B99228D374AA00AB75E6 /* Assets.xcassets in Resources */,
-				D0B9B98D28D374A800AB75E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,24 +249,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0CE1A9328D4B66F00E48AB7 /* ErrorMessages.swift in Sources */,
+				D03640AB28D497F000BAFD41 /* NetworkRequest.swift in Sources */,
+				D03640B428D4A3B400BAFD41 /* EUR.swift in Sources */,
+				D03640B628D4A3B400BAFD41 /* GBP.swift in Sources */,
+				D03640B728D4A3B400BAFD41 /* Bpi.swift in Sources */,
+				D029826D28D47377001FDB3A /* HomeViewController.swift in Sources */,
+				D03640B528D4A3B400BAFD41 /* Request.swift in Sources */,
 				D0B9B99028D374A800AB75E6 /* MyWallet.xcdatamodeld in Sources */,
-				D0B9B98A28D374A800AB75E6 /* ViewController.swift in Sources */,
+				D03640B828D4A3B400BAFD41 /* USD.swift in Sources */,
+				D03640B328D4A3B400BAFD41 /* Time.swift in Sources */,
+				D0A187FF28D6776200294D00 /* UIButtonExtension.swift in Sources */,
+				D0A1880128D679FD00294D00 /* UILabelExtension.swift in Sources */,
 				D0B9B98628D374A800AB75E6 /* AppDelegate.swift in Sources */,
 				D0B9B98828D374A800AB75E6 /* SceneDelegate.swift in Sources */,
+				D029826F28D47DD8001FDB3A /* UIColorExtension.swift in Sources */,
+				D0A1880328D75F8300294D00 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D0B9B98B28D374A800AB75E6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0B9B98C28D374A800AB75E6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D0B9B99328D374AA00AB75E6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -296,9 +408,9 @@
 				INFOPLIST_FILE = MyWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,9 +418,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = bagan.pavel.MyWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -324,9 +439,9 @@
 				INFOPLIST_FILE = MyWallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,9 +449,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = bagan.pavel.MyWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
