@@ -9,12 +9,10 @@ import Foundation
 import UIKit
 
 extension UILabel {
-    func setLabel(fontName: String, text: String?, textSize: CGFloat) -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor(rgb: 0xFFFFFF)
-        label.font = UIFont(name: fontName, size: textSize)
-        label.text = text
-        return label
+    func setupLabel(fontName: String, text: String?, textSize: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.textColor = UIColor(rgb: 0xFFFFFF)
+        self.font = UIFont(name: fontName, size: textSize)
+        self.text = text
     }
 }

@@ -8,11 +8,33 @@
 import UIKit
 import CoreData
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, UIScrollViewDelegate {
     
-    private var history: [Int64] = []
+    private let dataService = DataService.shared
+    private var page: Int = 1
+    private var currentAmount = DataService().fetchedAmount()
+    private var fetchedPayment: NSFetchedResultsController<Balance>?
     
-    private let bitcoindImage: UIImageView = {
+    private func fetchData() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest : NSFetchRequest<Balance> = Balance.fetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        fetchRequest.fetchLimit = page * 20
+        let mySortDescriptor = NSSortDescriptor(key: #keyPath(Balance.date), ascending: false)
+        fetchRequest.sortDescriptors = [mySortDescriptor]
+        fetchedPayment = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: #keyPath(Balance.date), cacheName: nil)
+        fetchedPayment?.delegate = self
+        do {
+            try fetchedPayment?.performFetch()
+            page += 1
+            transactionHistory.reloadData()
+        } catch {
+            print("Couldn't fetch")
+        }
+    }
+
+    private let bitcoinImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "bitcoinImage")
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -21,7 +43,8 @@ class HomeViewController: UIViewController {
     
     private let currencyLabel: UILabel = {
         let label = UILabel()
-        return label.setLabel(fontName: "Montserrat-Regular", text: nil, textSize: 12)
+        label.setupLabel(fontName: "Montserrat-Regular", text: nil, textSize: 12)
+        return label
     }()
     
     private let balanceStack: UIStackView = {
@@ -34,22 +57,26 @@ class HomeViewController: UIViewController {
     
     private let balanceLabel: UILabel = {
         let label = UILabel()
-        return label.setLabel(fontName: "Montserrat-Regular", text: "Balance BTC", textSize: 16)
+        label.setupLabel(fontName: "Montserrat-Regular", text: "Balance BTC", textSize: 16)
+        return label
     }()
     
     private let amountLabel: UILabel = {
         let label = UILabel()
-        return label.setLabel(fontName: "Montserrat-SemiBold", text: nil, textSize: 32)
+        label.setupLabel(fontName: "Montserrat-SemiBold", text: nil, textSize: 32)
+        return label
     }()
     
     private let depositButton: UIButton = {
         let button = UIButton(type: .system)
-        return button.setButton(title: "Deposit", image: "depositButton", padding: 70)
+        button.setupButton(title: "Deposit", image: "depositButton", padding: 70)
+        return button
     }()
     
     private let addTransactionButton: UIButton = {
         let button = UIButton(type: .system)
-        return button.setButton(title: "Add transaction", image: "transactionButton", padding: 210)
+        button.setupButton(title: "Add transaction", image: "transactionButton", padding: 210)
+        return button
     }()
     
     private let transactionHistory: UITableView = {
@@ -63,21 +90,35 @@ class HomeViewController: UIViewController {
         setInterface()
         setConstraints()
         depositButton.addTarget(self, action: #selector(deposit), for: .touchUpInside)
+        addTransactionButton.addTarget(self, action: #selector(addNewTransaction), for: .touchUpInside)
         
         NetworkRequest.shared.getCurrency { [weak self] results in
             switch results {
             case .success(let result):
                 self?.currencyLabel.text = "(BTC) $\(result.rateFloat ?? 0.0)"
             case .failure(let error):
-                print(error)
+                print(error.rawValue)
             }
         }
-        
-        self.amountLabel.text = "\(DataService().fetchedAmount())"
+
+        self.amountLabel.text = "\(currentAmount)"
+        fetchData()
+    }
+    
+    //MARK: - scrollViewDidEndDragging
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let position = scrollView.contentOffset.y
+        if position > (transactionHistory.contentSize.height - 100 - scrollView.frame.size.height) {
+            fetchData()
+        }
     }
     
     @objc private func deposit() {
         setAlert()
+    }
+    
+    @objc private func addNewTransaction() {
+        self.navigationController?.present(AddTransactionViewController(), animated: true)
     }
     
     private func setAlert() {
@@ -90,11 +131,12 @@ class HomeViewController: UIViewController {
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            let inputAmount = Int64(alertController.textFields?.first?.text ?? "")
-            guard let inputAmount = inputAmount else { return }
-            self.saveAmount(amount: inputAmount)
-            self.topUpHistory(amount: inputAmount)
-            self.amountLabel.text = "\(inputAmount)"
+            guard let inputAmount = Int64(alertController.textFields?.first?.text ?? "") else { return }
+            let dateString = Date().getCurrentDate()
+            let sum = self.dataService.fetchedAmount() + inputAmount
+            self.dataService.saveAmount(balance: sum, amount: inputAmount, date: dateString)
+            self.amountLabel.text = "\(sum)"
+            self.transactionHistory.reloadData()
         }
 
         alertController.addAction(cancelAction)
@@ -103,40 +145,21 @@ class HomeViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    private func topUpHistory(amount: Int64) {
-        history.append(amount)
-        transactionHistory.reloadData()
-    }
-    
-    private func saveAmount(amount: Int64) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: "Balance", in: context) else { return }
-        
-        let balanceObject = Balance(entity: entity, insertInto: context)
-        balanceObject.amount = amount
-        do {
-            try context.save()
-        } catch {
-            print("Couldn't save data")
-        }
-    }
-
     
     private func setInterface() {
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(rgb: 0x333333)
         view.addSubview(balanceStack)
         view.addSubview(currencyLabel)
-        view.addSubview(bitcoindImage)
+        view.addSubview(bitcoinImage)
         view.addSubview(depositButton)
         view.addSubview(addTransactionButton)
         view.addSubview(transactionHistory)
         balanceStack.addArrangedSubview(balanceLabel)
         balanceStack.addArrangedSubview(amountLabel)
         transactionHistory.dataSource = self
-        transactionHistory.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        transactionHistory.delegate = self
+        transactionHistory.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
     }
     
     private func setConstraints() {
@@ -147,8 +170,8 @@ class HomeViewController: UIViewController {
         currencyLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         currencyLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12).isActive = true
         
-        bitcoindImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        bitcoindImage.trailingAnchor.constraint(equalTo: currencyLabel.leadingAnchor, constant: -4).isActive = true
+        bitcoinImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        bitcoinImage.trailingAnchor.constraint(equalTo: currencyLabel.leadingAnchor, constant: -4).isActive = true
 
         depositButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12).isActive = true
         depositButton.bottomAnchor.constraint(equalTo: addTransactionButton.topAnchor, constant: -16).isActive = true
@@ -165,17 +188,40 @@ class HomeViewController: UIViewController {
         transactionHistory.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         transactionHistory.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
+    
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        transactionHistory.reloadData()
+    }
+    
 }
 
-extension HomeViewController: UITableViewDataSource {
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedPayment?.sections?.count ?? 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return history.count
+        guard let sectionInfo = fetchedPayment?.sections?[section] else { return 1 }
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(history[indexPath.row])"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as? TransactionViewCell else { return UITableViewCell() }
+
+        guard let transfer = fetchedPayment?.object(at: indexPath) else { return UITableViewCell() }
+        cell.configureView(date: transfer.date ?? "", amount: transfer.amount)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let header = (fetchedPayment?.sections?[section].objects?.first as? Balance)?.date
+        return header
+    }
+    
     
 }
