@@ -12,28 +12,8 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     private let dataService = DataService.shared
     private var page: Int = 1
-    private var currentAmount = DataService().fetchedAmount()
-    private var fetchedPayment: NSFetchedResultsController<Balance>?
+    private var fetchedPayment: NSFetchedResultsController<Payment>?
     
-    private func fetchData() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchRequest : NSFetchRequest<Balance> = Balance.fetchRequest()
-        fetchRequest.fetchBatchSize = 20
-        fetchRequest.fetchLimit = page * 20
-        let mySortDescriptor = NSSortDescriptor(key: #keyPath(Balance.date), ascending: false)
-        fetchRequest.sortDescriptors = [mySortDescriptor]
-        fetchedPayment = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: #keyPath(Balance.date), cacheName: nil)
-        fetchedPayment?.delegate = self
-        do {
-            try fetchedPayment?.performFetch()
-            page += 1
-            transactionHistory.reloadData()
-        } catch {
-            print("Couldn't fetch")
-        }
-    }
-
     private let bitcoinImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "bitcoinImage")
@@ -43,39 +23,37 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     private let currencyLabel: UILabel = {
         let label = UILabel()
-        label.setupLabel(fontName: "Montserrat-Regular", text: nil, textSize: 12)
+        label.setupLabel(fontName: .regular, text: nil, textSize: 12, color: .whiteColor)
         return label
     }()
     
     private let balanceStack: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setupStackView(axis: .vertical, spacing: 10)
         return stackView
     }()
     
     private let balanceLabel: UILabel = {
         let label = UILabel()
-        label.setupLabel(fontName: "Montserrat-Regular", text: "Balance BTC", textSize: 16)
+        label.setupLabel(fontName: .regular, text: "Balance BTC", textSize: 16, color: .whiteColor)
         return label
     }()
     
     private let amountLabel: UILabel = {
         let label = UILabel()
-        label.setupLabel(fontName: "Montserrat-SemiBold", text: nil, textSize: 32)
+        label.setupLabel(fontName: .semiBold, text: nil, textSize: 32, color: .whiteColor)
         return label
     }()
     
     private let depositButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setupButton(title: "Deposit", image: "depositButton", padding: 70)
+        button.setupButton(title: "Deposit", fontName: .medium, backgroundColor: .whiteColor, titleColor: .blackColor)
         return button
     }()
     
     private let addTransactionButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setupButton(title: "Add transaction", image: "transactionButton", padding: 210)
+        button.setupButton(title: "Add transaction", fontName: .medium, backgroundColor: .whiteColor, titleColor: .blackColor)
         return button
     }()
     
@@ -85,23 +63,18 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.amountLabel.text = "\(dataService.fetchedAmount())"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setInterface()
         setConstraints()
         depositButton.addTarget(self, action: #selector(deposit), for: .touchUpInside)
         addTransactionButton.addTarget(self, action: #selector(addNewTransaction), for: .touchUpInside)
-        
-        NetworkRequest.shared.getCurrency { [weak self] results in
-            switch results {
-            case .success(let result):
-                self?.currencyLabel.text = "(BTC) $\(result.rateFloat ?? 0.0)"
-            case .failure(let error):
-                print(error.rawValue)
-            }
-        }
-
-        self.amountLabel.text = "\(currentAmount)"
+        networkRequest()
         fetchData()
     }
     
@@ -113,28 +86,60 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         }
     }
     
+    //MARK: - Functions & Actions
     @objc private func deposit() {
         setAlert()
     }
     
     @objc private func addNewTransaction() {
-        self.navigationController?.present(AddTransactionViewController(), animated: true)
+        self.show(AddTransactionViewController(), sender: self)
+    }
+    
+    private func networkRequest() {
+        NetworkRequest.shared.getCurrency { [weak self] results in
+            switch results {
+            case .success(let result):
+                self?.currencyLabel.text = "(BTC) $\(result.rateFloat ?? 0.0)"
+            case .failure(let error):
+                print(error.rawValue)
+            }
+        }
+    }
+    
+    private func fetchData() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest : NSFetchRequest<Payment> = Payment.fetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        fetchRequest.fetchLimit = page * 20
+        let mySortDescriptor = NSSortDescriptor(key: #keyPath(Payment.date), ascending: false)
+        fetchRequest.sortDescriptors = [mySortDescriptor]
+        fetchedPayment = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: #keyPath(Payment.currentDate), cacheName: nil)
+        fetchedPayment?.delegate = self
+        do {
+            try fetchedPayment?.performFetch()
+            page += 1
+            transactionHistory.reloadData()
+        } catch {
+            print("Couldn't fetch")
+        }
     }
     
     private func setAlert() {
         let alertController = UIAlertController(title: "Deposit", message: "Enter the amount", preferredStyle: .alert)
 
         alertController.addTextField { (textField) in
-            textField.keyboardType = .numberPad
+            textField.keyboardType = .decimalPad
             textField.placeholder = "Amount"
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            guard let inputAmount = Int64(alertController.textFields?.first?.text ?? "") else { return }
-            let dateString = Date().getCurrentDate()
+            guard let inputAmount = Double(alertController.textFields?.first?.text?.replacingOccurrences(of: ",", with: ".") ?? "") else { return }
+            guard let currentDate = Date().getCurrentDate(format: .dateWithTime) else { return }
             let sum = self.dataService.fetchedAmount() + inputAmount
-            self.dataService.saveAmount(balance: sum, amount: inputAmount, date: dateString)
+            let topUpCategory = "TopUp"
+            self.dataService.saveAmount(currentBalance: sum, amount: inputAmount, date: currentDate, category: topUpCategory)
             self.amountLabel.text = "\(sum)"
             self.transactionHistory.reloadData()
         }
@@ -145,7 +150,7 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         present(alertController, animated: true, completion: nil)
     }
     
-    
+    //MARK: - Setup interface
     private func setInterface() {
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(rgb: 0x333333)
@@ -189,13 +194,14 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         transactionHistory.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
     
-    
+    //MARK: - NSFetchedResultsControllerDelegate
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         transactionHistory.reloadData()
     }
     
 }
 
+//MARK: - UITableView delegate & dataSource
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedPayment?.sections?.count ?? 1
@@ -210,7 +216,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as? TransactionViewCell else { return UITableViewCell() }
 
         guard let transfer = fetchedPayment?.object(at: indexPath) else { return UITableViewCell() }
-        cell.configureView(date: transfer.date ?? "", amount: transfer.amount)
+        cell.configureView(date: transfer.date?.toDayString(format: .dateWithTime) ?? "", amount: transfer.amount, category: transfer.category ?? "")
         return cell
     }
     
@@ -219,9 +225,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let header = (fetchedPayment?.sections?[section].objects?.first as? Balance)?.date
+        let header = (fetchedPayment?.sections?[section].objects?.first as? Payment)?.date?.toDayString(format: .dayOfMonth)
         return header
     }
     
     
+}
+
+extension Payment {
+    @objc var currentDate: String {
+        get {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: self.date ?? Date())
+        }
+    }
 }

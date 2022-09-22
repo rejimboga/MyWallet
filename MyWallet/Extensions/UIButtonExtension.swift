@@ -9,19 +9,15 @@ import Foundation
 import UIKit
 
 extension UIButton {
-    func setupButton(title: String, image: String, padding: CGFloat) {
+    func setupButton(title: String, fontName: Font, backgroundColor: Color, titleColor: Color) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = UIColor(rgb: 0xFFFFFF)
+        self.backgroundColor = UIColor(rgb: backgroundColor.rawValue)
         self.setTitle(title, for: .normal)
-        self.titleLabel?.font = UIFont(name: "Montserrat-Regular", size: 16)
-        self.setTitleColor(UIColor(rgb: 0x000000), for: .normal)
+        self.titleLabel?.textAlignment = .center
+        self.titleLabel?.font = UIFont(name: fontName.rawValue, size: 16)
+        self.setTitleColor(UIColor(rgb: titleColor.rawValue), for: .normal)
         self.layer.cornerRadius = 22
         self.clipsToBounds = true
-        self.setImage(UIImage(named: image), for: .normal)
-        self.tintColor = UIColor(rgb: 0x000000)
-        self.semanticContentAttribute = .forceRightToLeft
-        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: padding)
-        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: 0)
     }
 
 }

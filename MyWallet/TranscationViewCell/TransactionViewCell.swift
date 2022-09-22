@@ -13,7 +13,6 @@ class TransactionViewCell: UITableViewCell {
     
     private let iconCategoryImage: UIImageView = {
         let icon = UIImageView()
-        icon.image = UIImage(named: "topUpIcon")
         icon.contentMode = .scaleAspectFit
         icon.translatesAutoresizingMaskIntoConstraints = false
         return icon
@@ -21,71 +20,48 @@ class TransactionViewCell: UITableViewCell {
     
     private let categoryStack: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 5
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setupStackView(axis: .vertical, spacing: 5)
         return stackView
     }()
     
     private let typeOfSpentLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(rgb: 0x000000)
-        label.font = UIFont(name: "Montserrat-Regular", size: 16)
-        label.text = "Terminal"
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setupLabel(fontName: .regular, text: nil, textSize: 16, color: .blackColor)
         return label
     }()
     
     private let categoryNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(rgb: 0x9D9D9D)
-        label.font = UIFont(name: "Montserrat-Regular", size: 12)
-        label.text = "Payment"
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setupLabel(fontName: .regular, text: nil, textSize: 12, color: .nobelColor)
         return label
     }()
     
     private let infoStack: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 5
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setupStackView(axis: .vertical, spacing: 5)
         return stackView
     }()
     
     private let spentAmountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(rgb: 0x21C531)
-        label.font = UIFont(name: "Montserrat-Regular", size: 16)
-        label.text = "+30 BTC"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
-        label.textColor = UIColor(rgb: 0x9D9D9D)
-        label.font = UIFont(name: "Montserrat-Regular", size: 12)
-        label.text = "12:37"
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setupLabel(fontName: .regular, text: nil, textSize: 12, color: .nobelColor)
         return label
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         setupConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     private func setupView() {
@@ -113,15 +89,95 @@ class TransactionViewCell: UITableViewCell {
         infoStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
     }
     
-    func configureView(date: String, amount: Int64) {
-        spentAmountLabel.text = "+\(amount) BTC"
-        dateLabel.text = "\(date.toDay())"
+    func configureView(date: String, amount: Double, category: String) {
+        dateLabel.text = "\(date.toDay(format: .hoursWithMinutes))"
+        categoryNameLabel.text = categoryType(category: category)
+        typeOfSpentLabel.text = organizationName(category: category)
+        iconCategoryImage.image = UIImage(named: getIcon(category: category))
+        spentAmountLabel.setupLabel(fontName: .regular, text: "\(amount) BTC", textSize: 16, color: spentColor(category: category))
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    private func getIcon(category: String) -> String {
+        guard let categoryType = CategoryType(rawValue: category) else { return "topUpIcon" }
+        return categoryType.getIcon()
+    }
+    
+    private func spentColor(category: String) -> Color {
+        guard let categoryType = CategoryType(rawValue: category) else { return .limeColor }
+        return categoryType.spentColor()
+    }
+    
+    private func categoryType(category: String) -> String {
+        guard let categoryType = CategoryType(rawValue: category) else { return "" }
+        return categoryType.getType()
+    }
+    
+    private func organizationName(category: String) -> String {
+        guard let categoryType = CategoryType(rawValue: category) else { return "" }
+        return categoryType.getName()
     }
 
 }
+
+enum CategoryType: String {
+    case topUp = "TopUp"
+    case taxi = "Taxi"
+    case food = "Food"
+    
+    func getType() -> String {
+        switch self {
+        case .topUp:
+            return "Payment"
+        case .taxi:
+            return "Taxi"
+        case .food:
+            return "Food"
+        }
+    }
+    
+    func getName() -> String {
+        switch self {
+        case .topUp:
+            return "Terminal"
+        case .taxi:
+            return "Uber"
+        case .food:
+            return "McDonald's"
+        }
+    }
+    
+    func transactionType(amount: Double) -> Double {
+        switch self {
+        case .topUp:
+            return amount
+        case .taxi:
+            return -amount
+        case .food:
+            return -amount
+        }
+    }
+    
+    func spentColor() -> Color {
+        switch self {
+        case .topUp:
+            return Color.limeColor
+        case .taxi:
+            return Color.redColor
+        case .food:
+            return Color.redColor
+        }
+    }
+    
+    func getIcon() -> String {
+        switch self {
+        case .topUp:
+            return "topUpIcon"
+        case .taxi:
+            return "taxiIcon"
+        case .food:
+            return "foodIcon"
+        }
+    }
+}
+
+

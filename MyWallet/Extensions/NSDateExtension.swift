@@ -8,11 +8,26 @@
 import Foundation
 
 extension Date {
-    func getCurrentDate() -> String {
+    func getCurrentDate(format: DateFormat) -> Date? {
         let date = NSDate()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        dateFormatter.dateFormat = format.rawValue
         let dateString = dateFormatter.string(from: date as Date)
+        
+        let currentDate = dateFormatter.date(from: dateString)
+        return currentDate
+    }
+    
+    func toDayString(format: DateFormat) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format.rawValue
+        let dateString = dateFormatter.string(from: self)
         return dateString
     }
+}
+
+enum DateFormat: String {
+    case dateWithTime = "dd/MM/yyyy HH:mm"
+    case dayOfMonth = "MMMM, dd"
+    case hoursWithMinutes = "HH:mm"
 }
