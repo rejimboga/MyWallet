@@ -35,12 +35,12 @@ class DataService {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "Payment", in: context) else { return }
-        let balanceObject = Payment(entity: entity, insertInto: context)
+        let paymentObject = Payment(entity: entity, insertInto: context)
         guard let categoryType = CategoryType(rawValue: category) else { return }
-        balanceObject.currentBalance = currentBalance
-        balanceObject.amount = categoryType.transactionType(amount: amount)
-        balanceObject.category = category
-        balanceObject.date = date
+        paymentObject.currentBalance = currentBalance
+        paymentObject.amount = categoryType.transactionType(amount: amount)
+        paymentObject.category = category
+        paymentObject.date = date
         do {
             try context.save()
         } catch {

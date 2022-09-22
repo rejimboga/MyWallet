@@ -19,6 +19,8 @@
 		D029826D28D47377001FDB3A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029826C28D47376001FDB3A /* HomeViewController.swift */; };
 		D029826F28D47DD8001FDB3A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029826E28D47DD8001FDB3A /* UIColorExtension.swift */; };
 		D03640AB28D497F000BAFD41 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03640AA28D497F000BAFD41 /* NetworkRequest.swift */; };
+		D03A7AD728DC765C003C3AC9 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A7AD628DC765C003C3AC9 /* DoubleExtension.swift */; };
+		D03A7AD928DC76B2003C3AC9 /* PaymentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A7AD828DC76B2003C3AC9 /* PaymentExtension.swift */; };
 		D04342E228DC406F0092DC36 /* UIStackViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04342E128DC406F0092DC36 /* UIStackViewExtension.swift */; };
 		D055271328DB9BDD00EEE63F /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055271228DB9BDD00EEE63F /* UITextFieldExtension.swift */; };
 		D0A187FF28D6776200294D00 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A187FE28D6776200294D00 /* UIButtonExtension.swift */; };
@@ -49,6 +51,8 @@
 		D029826C28D47376001FDB3A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D029826E28D47DD8001FDB3A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		D03640AA28D497F000BAFD41 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		D03A7AD628DC765C003C3AC9 /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
+		D03A7AD828DC76B2003C3AC9 /* PaymentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentExtension.swift; sourceTree = "<group>"; };
 		D04342E128DC406F0092DC36 /* UIStackViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewExtension.swift; sourceTree = "<group>"; };
 		D055271228DB9BDD00EEE63F /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		D0A187FE28D6776200294D00 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 				D0CF382128DAF7F300AD602C /* NSDateExtension.swift */,
 				D055271228DB9BDD00EEE63F /* UITextFieldExtension.swift */,
 				D04342E128DC406F0092DC36 /* UIStackViewExtension.swift */,
+				D03A7AD628DC765C003C3AC9 /* DoubleExtension.swift */,
+				D03A7AD828DC76B2003C3AC9 /* PaymentExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -292,8 +298,10 @@
 				D027351028D9EC37000731F4 /* Request.swift in Sources */,
 				D0CF381E28DA703C00AD602C /* TransactionViewCell.swift in Sources */,
 				D027350F28D9EC37000731F4 /* USD.swift in Sources */,
+				D03A7AD728DC765C003C3AC9 /* DoubleExtension.swift in Sources */,
 				D027350C28D9EC37000731F4 /* Bpi.swift in Sources */,
 				D029826D28D47377001FDB3A /* HomeViewController.swift in Sources */,
+				D03A7AD928DC76B2003C3AC9 /* PaymentExtension.swift in Sources */,
 				D0B9B99028D374A800AB75E6 /* MyWallet.xcdatamodeld in Sources */,
 				D0A187FF28D6776200294D00 /* UIButtonExtension.swift in Sources */,
 				D0A1880128D679FD00294D00 /* UILabelExtension.swift in Sources */,

@@ -65,7 +65,7 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.amountLabel.text = "\(dataService.fetchedAmount())"
+        self.amountLabel.text = "\(dataService.fetchedAmount().rounded(toPlaces: 5))"
     }
     
     override func viewDidLoad() {
@@ -99,7 +99,7 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
         NetworkRequest.shared.getCurrency { [weak self] results in
             switch results {
             case .success(let result):
-                self?.currencyLabel.text = "(BTC) $\(result.rateFloat ?? 0.0)"
+                self?.currencyLabel.text = "(BTC) $\(result.rateFloat?.rounded(toPlaces: 1) ?? 0.0)"
             case .failure(let error):
                 print(error.rawValue)
             }
@@ -140,7 +140,7 @@ class HomeViewController: UIViewController, NSFetchedResultsControllerDelegate, 
             let sum = self.dataService.fetchedAmount() + inputAmount
             let topUpCategory = "TopUp"
             self.dataService.saveAmount(currentBalance: sum, amount: inputAmount, date: currentDate, category: topUpCategory)
-            self.amountLabel.text = "\(sum)"
+            self.amountLabel.text = "\(sum.rounded(toPlaces: 5))"
             self.transactionHistory.reloadData()
         }
 
@@ -216,7 +216,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as? TransactionViewCell else { return UITableViewCell() }
 
         guard let transfer = fetchedPayment?.object(at: indexPath) else { return UITableViewCell() }
-        cell.configureView(date: transfer.date?.toDayString(format: .dateWithTime) ?? "", amount: transfer.amount, category: transfer.category ?? "")
+        cell.configureView(date: transfer.date?.toDayString(format: .dateWithTime) ?? "", amount: transfer.amount.rounded(toPlaces: 5), category: transfer.category ?? "")
         return cell
     }
     
@@ -229,15 +229,4 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         return header
     }
     
-    
-}
-
-extension Payment {
-    @objc var currentDate: String {
-        get {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            return formatter.string(from: self.date ?? Date())
-        }
-    }
 }
